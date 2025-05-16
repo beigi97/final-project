@@ -21,3 +21,13 @@ export const getGenreName = async (genre, page = 1) => {
   );
   return data;
 };
+
+export const getFilmDetails = async (id) => {
+  if (!id) {
+    return;
+  }
+  const { data } = await axios.get(
+    `https://moviesapi.codingfront.dev/api/v1/movies/${id}`
+  );
+  return data;
+};

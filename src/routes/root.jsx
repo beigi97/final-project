@@ -2,6 +2,7 @@ import { Navbar } from "flowbite-react";
 import bgImage from "../assets/imgs/Background.svg";
 import { Outlet } from "react-router-dom";
 import "../App.css";
+import LanguageSwitcher from "../components/LanguageSwitcher";
 
 export default function Root() {
   return (
@@ -11,7 +12,7 @@ export default function Root() {
           backgroundImage: `URL(${bgImage})`,
           backgroundSize: "cover",
         }}
-        // className="bg-Grey900"
+        className="bg-Grey900"
       >
         <header>
           <Navbar
@@ -36,9 +37,12 @@ export default function Root() {
                 fill="#7B6EF6"
               />
             </svg>
+            <div className="ltr:mr-32 rtl:ml-32">
+              <LanguageSwitcher />
+            </div>
           </Navbar>
         </header>
-        <main className="px-4 py-2.5 mt-24">
+        <main className="px-4 py-2.5 ">
           <Outlet />
         </main>
       </div>

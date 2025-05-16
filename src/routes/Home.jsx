@@ -1,14 +1,17 @@
-import { useEffect, useState } from "react";
-import { getFilms } from "../api/data";
+import { useTranslation } from "react-i18next";
 import { useLoaderData, useSearchParams } from "react-router-dom";
-import { Spinner } from "flowbite-react";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { useEffect, useState } from "react";
+import { getFilms, getGenreName, getGenresName } from "../api/data";
 import HomeCard from "../components/HomeCard";
+import InfiniteScroll from "react-infinite-scroll-component";
+import React from "react";
+import { Spinner } from "flowbite-react";
 
 export async function loader() {
   const response = await getFilms(1, 12);
   const movies = response.data;
   const metadata = response.metadata;
+
   const genres = await getGenresName();
 
   return { movies, metadata, genres };
@@ -20,8 +23,10 @@ export default function Home() {
   const [page, setPage] = useState(2);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
+
   const [searchParams, setSearchParams] = useSearchParams();
   const searchQuery = searchParams.get("q") || "";
+
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedGenre, setSelectedGenre] = useState("All");
@@ -34,6 +39,14 @@ export default function Home() {
   const [genreTotalCount, setGenreTotalCount] = useState(0);
   const [initialLoading, setInitialLoading] = useState(true);
   const [isGenreLoading, setIsGenreLoading] = useState(false);
+
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    if (movies.length > 0) {
+      setInitialLoading(false);
+    }
+  }, [movies]);
 
   const loadMoreMovies = async () => {
     setLoading(true);
@@ -130,11 +143,6 @@ export default function Home() {
     setIsDropdownOpen((prevState) => !prevState);
   };
 
-  useEffect(() => {
-    if (movies.length > 0) {
-      setInitialLoading(false);
-    }
-  }, [movies]);
   return (
     <section>
       <div className="w-5/12 mt-20 mb-6  ltr:ml-32 rtl:mr-32">
@@ -142,10 +150,9 @@ export default function Home() {
           {t("appTitle")}
         </h1>
         <p className="font-Poppins font-normal text-base text-Grey300 2xl:w-3/4">
-          List of movies and TV Shows, I,
-          <span className="text-Primary400">Pramod Poudel </span> Pramod Poudel
-          have watched till date. Explore what I have watched and also feel free
-          to make a suggestion.😉
+          {t("appDescription_part1")}
+          <span className="text-Primary400"> {t("appDescription_name")} </span>
+          {t("appDescription_part2")}
         </p>
       </div>
 
@@ -171,7 +178,7 @@ export default function Home() {
             value={searchQuery}
             onChange={handleNameChange}
             className="block w-80 p-4 ps-10 text-sm text-Grey50 border border-Black10 rounded-lg bg-Grey700"
-            placeholder="Search Movies or TV Shows"
+            placeholder={t("search_placeholder")}
           />
         </div>
       </form>
@@ -185,7 +192,7 @@ export default function Home() {
               : "bg-transparent text-Grey300 hover:bg-Grey800"
           }`}
         >
-          All
+          {t("All")}
         </button>
 
         {visibleGenres.map((genre) => (
@@ -206,7 +213,7 @@ export default function Home() {
           onClick={toggleDropdown}
           className="inline-flex items-center rounded-lg px-6 py-2 text-sm font-Poppins bg-transparent text-Grey300 hover:bg-Grey800"
         >
-          "More"
+          {t("more")}
         </button>
 
         {isDropdownOpen && (
