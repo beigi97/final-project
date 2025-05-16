@@ -1,12 +1,68 @@
-# React + Vite
+# Movie Center
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project uses the following API to fetch movie information:
 
-Currently, two official plugins are available:
+> `https://moviesapi.codingfront.dev/api/v1/movies`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+##### API Features:
 
-## Expanding the ESLint configuration
+- Movie title
+- IMDb rating
+- Image (Poster)
+- Year of production and other information
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+#### Features
+
+- Display IMDb movie list
+- Search by movie name
+- Filter movies by genre
+- Unlimited loading (Infinite Scroll)
+
+### Technologies Used
+
+- React
+- Vite
+- Axios
+- Tailwind CSS
+- flowbite
+- i18next
+- react-i18next
+
+### Multilingual Support
+
+This project supports multilingual functionality using the `i18next` and `react-i18next` libraries. The `LanguageSwitcher` component enables switching between languages.
+
+#### How it Works
+
+- The `LanguageSwitcher` component is implemented using the `useTranslation` hook from the `react-i18next` library.
+- Clicking the language switch button toggles between Persian (FA) and English (EN).
+- When the language changes, the page direction automatically changes (RTL for Persian and LTR for English).
+
+#### i18n Configuration
+
+- The `src/i18n.js` file contains the main i18n settings.
+- Translations are defined in the `resources` object.
+- To add a new language:
+  1. Add a new key to the `resources` object.
+  2. Place the translations for the new language in the `translation` section.
+  3. Update the `LanguageSwitcher` component to support the new language.
+
+#### Translation Usage Example
+
+```jsx
+import { useTranslation } from "react-i18next";
+
+function MyComponent() {
+  const { t } = useTranslation();
+  return <h1>{t("appTitle")}</h1>;
+}
+```
+
+### Project Setup
+
+1. Clone the repository
+2. Run `npm install`
+3. Rename `.env.example` to `.env` and add environment values
+4. Run `npm run dev`
