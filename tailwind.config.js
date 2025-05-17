@@ -30,6 +30,9 @@ export default {
       fontSize: {
         "custom-64": "64px",
       },
+      fontFamily: {
+        Poppins: ["Poppins", "sans-serif"],
+      },
     },
   },
   plugins: [flowbite.plugin()],
